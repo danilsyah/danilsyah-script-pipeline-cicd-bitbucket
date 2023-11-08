@@ -1,0 +1,16 @@
+pipelines:
+  branches:
+    rspg:
+      - step:
+          name: Deploy to server rspg - ihospital-rspg-staging
+          trigger: automatic
+          deployment: staging_RSPG
+          script:
+            - echo "Deploying to server rspg - ihospital-rspg-staging"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $HOST_USER
+                SERVER: $HOST_ADDRESS
+                PORT: $HOST_PORT
+                MODE: 'script'
+                COMMAND: './autodeploycicd/deployserver_rspg_staging.sh'

@@ -1,0 +1,17 @@
+pipelines:
+  branches:
+    rswb_simulasi:
+      - step:
+          name: Deploy to server 223 rswb - ihospital-rswb-staging
+          trigger: automatic
+          deployment: staging_RSWB
+          script:
+            - echo "Deploy to server 223 rswb - ihospital-rswb-staging"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $HOST_USER
+                SERVER: $HOST_ADDRESS
+                PORT: $HOST_PORT
+                MODE: 'script'
+                COMMAND: './autodeploycicd/deployserver_rswb_staging.sh'
+     

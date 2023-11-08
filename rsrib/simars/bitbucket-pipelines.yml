@@ -1,0 +1,16 @@
+pipelines:
+  branches:
+    rsrib:
+     - step:
+         name: Deploy to server ip 5 rsrib - ihospital-rsrib-simulasi
+         deployment: staging_RSRIB
+         trigger: automatic
+         script:
+           - echo "Deploying to server RSRIB - ihospital-rsrib-simulasi"
+           - pipe: atlassian/ssh-run:0.2.2
+             variables:
+               SSH_USER: $HOST_USER
+               SERVER: $HOST_ADDRESS
+               PORT: $HOST_PORT
+               MODE: 'script'
+               COMMAND: './autodeploycicd/deployserver_rsrib_staging.sh'

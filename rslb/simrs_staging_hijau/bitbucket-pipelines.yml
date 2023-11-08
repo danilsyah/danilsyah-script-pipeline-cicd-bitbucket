@@ -1,0 +1,16 @@
+pipelines:
+  branches:
+    rslb_main:
+      - step:
+          name: Deploy to server on premise - simrs staging hijau
+          trigger: automatic
+          deployment: staging_RSLB
+          script:
+            - echo "Deploying to server on premise - simrs staging hijau"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $HOST_USER
+                SERVER: $HOST_ADDRESS
+                PORT: $HOST_PORT
+                MODE: 'script'
+                COMMAND: './autodeploycicd/deployserver_rslb_staging.sh'

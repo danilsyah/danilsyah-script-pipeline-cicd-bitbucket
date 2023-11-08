@@ -1,0 +1,18 @@
+pipelines:
+  branches:
+    rswb:
+      - stage:
+          name: Deploy to SERVER-223
+          trigger: automatic
+          deployment: server_RSWB #Server On Premise 192.168.214.223
+          steps:
+           - step:
+              script:
+                - echo "Deploy to SERVER IP 223 - repo ppi-rswb-simulasi"
+                - pipe: atlassian/ssh-run:0.2.2
+                  variables:
+                    SSH_USER: $HOST_USER
+                    SERVER: $HOST_ADDRESS
+                    PORT: $HOST_PORT
+                    MODE: 'script'
+                    COMMAND: './autodeploycicd/deployserver_rswb.sh'

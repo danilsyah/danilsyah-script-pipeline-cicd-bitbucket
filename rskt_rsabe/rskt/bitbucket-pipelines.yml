@@ -1,0 +1,16 @@
+pipelines:
+  branches:
+    rskt_simulasi:
+      - step:
+          name: Deploy to server 10 rskt kelet - ihospital-rskt-simulasi
+          trigger: automatic
+          deployment: staging_RSKT
+          script:
+            - echo "Deploying to server 10 rskt kelet -  ihospital-rskt-simulasi"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $HOST_USER
+                SERVER: $HOST_ADDRESS
+                PORT: $HOST_PORT
+                MODE: 'script'
+                COMMAND: './autodeploycicd/deployserver_rskt_staging.sh'

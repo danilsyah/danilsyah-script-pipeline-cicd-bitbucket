@@ -1,0 +1,42 @@
+pipelines:
+  branches:
+    rssacpt:
+      - step:
+          name: Deploy to server 6 rsscpt - ihospital-rssacpt-staging
+          trigger: automatic
+          deployment: staging_RSSACPT
+          script:
+            - echo "Deploying to server 6 rsscpt -  ihospital-rssacpt-staging"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $HOST_USER
+                SERVER: $HOST_ADDRESS
+                PORT: $HOST_PORT
+                MODE: 'script'
+                COMMAND: './autodeploycicd/deployserver_rssacpt_staging.sh'
+      - step:
+          name: Deploy to server 4 rsscpt - ihospital-rssacpt-old (running)
+          trigger: manual
+          deployment: production_RSSACPT_OLD
+          script:
+            - echo "Deploying to server 4 rsscpt running - ihospital-rssacpt-old"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $HOST_USER
+                SERVER: $HOST_ADDRESS
+                PORT: $HOST_PORT
+                MODE: 'script'
+                COMMAND: './autodeploycicd/deployserver_rssacpt_running_old.sh'
+      - step:
+          name: Deploy to server 5 rsscpt running - ihospital-rssacpt
+          trigger: manual
+          deployment: production_RSSACPT
+          script:
+            - echo "Deploying to server 5 rsscpt running - ihospital-rssacpt"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $HOST_USER
+                SERVER: $HOST_ADDRESS
+                PORT: $HOST_PORT
+                MODE: 'script'
+                COMMAND: './autodeploycicd/deployserver_rssacpt_running.sh'

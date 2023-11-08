@@ -1,0 +1,16 @@
+pipelines:
+  branches:
+    web-rskt:
+      - step:
+          name: Deploy to server IP 90 RSKT- web-rskt
+          trigger: automatic
+          deployment: production_RSKT
+          script:
+            - echo "Deploy to server IP 90 RSKT- web-rskt"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $HOST_USER
+                SERVER: $HOST_ADDRESS
+                PORT: $HOST_PORT
+                MODE: "script"
+                COMMAND: "./autodeploycicd/deployserver_rskt_website.sh"

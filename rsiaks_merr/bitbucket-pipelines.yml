@@ -1,0 +1,30 @@
+pipelines:
+  branches:
+    develop:
+      - step:
+          name: Deploy to server rsiak - simars-ks
+          trigger: automatic
+          deployment: staging_RSIAK
+          script:
+            - echo "Deploying to server rsiak - simars-ks"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $HOST_USER
+                SERVER: $HOST_ADDRESS
+                PORT: $HOST_PORT
+                MODE: 'script'
+                COMMAND: './autodeploycicd/deployserver_rsiak_staging.sh'
+      - step:
+          name: Deploy to server rsia-merr - simars-merr
+          trigger: automatic
+          deployment: staging_RSIAMERR
+          script:
+            - echo "Deploying to server rsia-merr - simars-merr"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $HOST_USER
+                SERVER: $HOST_ADDRESS
+                PORT: $HOST_PORT
+                MODE: 'script'
+                COMMAND: './autodeploycicd/deployserver_rsiamerr_staging.sh'
+            

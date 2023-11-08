@@ -1,0 +1,16 @@
+pipelines:
+  branches:
+    rsbin_simulasi:
+      - step:
+          name: Deploy to server RSBIN - ihospital-rsbin-simulasi
+          trigger: automatic
+          deployment: staging_RSBIN
+          script:
+            - echo "Deploying to server RSBIN - ihospital-rsbin-simulasi"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $HOST_USER
+                SERVER: $HOST_ADDRESS
+                PORT: $HOST_PORT
+                MODE: 'script'
+                COMMAND: './autodeploycicd/deployserver_rsbin_staging.sh'

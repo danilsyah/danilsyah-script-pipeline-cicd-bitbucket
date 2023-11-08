@@ -1,0 +1,29 @@
+pipelines:
+  branches:
+    rscms:
+     - step:
+         name: Deploy to server IP 11 RSCMS - ihospital-rscms-staging
+         trigger: automatic
+         deployment: staging_RSCMS
+         script:
+           - echo "Deploying to server IP 11 RSCMS - repo ihospital-rscms-staging"
+           - pipe: atlassian/ssh-run:0.2.2
+             variables:
+               SSH_USER: $HOST_USER
+               SERVER: $HOST_ADDRESS
+               PORT: $HOST_PORT
+               MODE: 'script'
+               COMMAND: './autodeploycicd/deployserver_rscms_staging.sh'
+    #  - step:
+    #       name: Deploy to server IP 3 RSIAS - ihospital-rsias-staging
+    #       trigger: automatic
+    #       deployment: staging_RSIAS
+    #       script:
+    #         - echo "Deploying to server on premise - ihospital-rsias-staging"
+    #         - pipe: atlassian/ssh-run:0.2.2
+    #           variables:
+    #             SSH_USER: $HOST_USER
+    #             SERVER: $HOST_ADDRESS
+    #             PORT: $HOST_PORT
+    #             MODE: 'script'
+    #             COMMAND: './autodeploycicd/deployserver_rsias_staging.sh'

@@ -1,0 +1,16 @@
+pipelines:
+  branches:
+    rspkt:
+      - step:
+          name: Deploy to server3 HQ - repo rspkt-running
+          trigger: automatic
+          deployment: server3_HQ
+          script:
+            - echo "Deploy to server3 On Premise HQ - repo rspkt-running"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $HOST_USER
+                SERVER: $HOST_ADDRESS
+                PORT: $HOST_PORT
+                MODE: 'script'
+                COMMAND: './autodeploycicd/deployserver_rspktb_server3hq.sh'

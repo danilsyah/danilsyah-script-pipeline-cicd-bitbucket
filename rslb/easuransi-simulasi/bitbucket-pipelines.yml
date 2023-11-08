@@ -1,0 +1,16 @@
+pipelines:
+  branches:
+    rslb:
+      - step:
+          name: Deploy to server RSLB IP 9 - e-asuransi-simulasi
+          trigger: automatic
+          deployment: staging_RSLB_IP9
+          script:
+            - echo "Deploying to server RSLB IP 9 - e-asuransi-simulasi"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $HOST_USER
+                SERVER: $HOST_ADDRESS
+                PORT: $HOST_PORT
+                MODE: 'script'
+                COMMAND: './autodeploycicd/deployserver_rslb_easuransi.sh'

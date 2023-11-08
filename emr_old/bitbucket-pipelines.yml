@@ -1,0 +1,16 @@
+pipelines:
+  branches:
+    ehealthsys_emr_simpp:
+      - step:
+          name: Deploy to Server Local IP 3 HQ - Repo emr
+          trigger: automatic
+          deployment: server3_HQ
+          script:
+            - echo "Deploy to Server Local IP 3 HQ - Repo emr"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $HOST_USER
+                SERVER: $HOST_ADDRESS
+                PORT: $HOST_PORT
+                MODE: 'script'
+                COMMAND: './autodeploycicd/deployserver3_hq.sh'

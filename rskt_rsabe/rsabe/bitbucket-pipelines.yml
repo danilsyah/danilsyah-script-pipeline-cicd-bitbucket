@@ -1,0 +1,16 @@
+pipelines:
+  branches:
+    rskt:
+     - step:
+         name: Deploy to server IP 54 - ihospital-rsabe-simulasi
+         deployment: staging_RSABE
+         trigger: automatic
+         script:
+           - echo "Deploying to server IP 54 - ihospital-rsabe-simulasi"
+           - pipe: atlassian/ssh-run:0.2.2
+             variables:
+               SSH_USER: $HOST_USER
+               SERVER: $HOST_ADDRESS
+               PORT: $HOST_PORT
+               MODE: 'script'
+               COMMAND: './autodeploycicd/deployserver_rsabe_staging.sh'

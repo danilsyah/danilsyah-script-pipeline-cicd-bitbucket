@@ -1,0 +1,89 @@
+pipelines:
+  branches:
+    master:
+     - stage:
+        name: Deploy to SERVER3-HQ
+        trigger: automatic
+        deployment: server3_HQ #Server On Premise IP 10.10.172.3
+        steps:
+          - step:
+             script:
+               - echo "Deploy to SERVER3-HQ - repo satusehat"
+               - pipe: atlassian/ssh-run:0.2.2
+                 variables:
+                  SSH_USER: $HOST_USER
+                  SERVER: $HOST_ADDRESS
+                  PORT: $HOST_PORT
+                  MODE: 'script'
+                  COMMAND: './autodeploycicd/deployserver3_hq.sh'
+          - step:
+             script:
+              - echo "Deploy to SERVER3-HQ - repo satusehat-rsnu-staging"
+              - pipe: atlassian/ssh-run:0.2.2
+                variables:
+                  SSH_USER: $HOST_USER
+                  SERVER: $HOST_ADDRESS
+                  PORT: $HOST_PORT
+                  MODE: 'script'
+                  COMMAND: './autodeploycicd/deployserver3_staging_hq.sh'
+     - stage:
+        name: Deploy to SERVER RSRIB 
+        trigger: automatic
+        deployment: server_RSRIB #Server On Premise 192.168.4.5
+        steps:
+          - step:
+             script:
+               - echo "Deploy to SERVER IP 5 - repo satusehat-rsrib-staging"
+               - pipe: atlassian/ssh-run:0.2.2
+                 variables:
+                  SSH_USER: $HOST_USER
+                  SERVER: $HOST_ADDRESS
+                  PORT: $HOST_PORT
+                  MODE: 'script'
+                  COMMAND: './autodeploycicd/deployserver_rsrib.sh'
+     - stage:
+        name: Deploy to SERVER RSBKT 
+        trigger: automatic
+        deployment: server_RSBKT #Server On Premise 172.27.92.3
+        steps:
+          - step:
+             script:
+               - echo "Deploy to SERVER IP 3 - repo satusehat-rswbml-staging"
+               - pipe: atlassian/ssh-run:0.2.2
+                 variables:
+                  SSH_USER: $HOST_USER
+                  SERVER: $HOST_ADDRESS
+                  PORT: $HOST_PORT
+                  MODE: 'script'
+                  COMMAND: './autodeploycicd/deployserver_rsbkt.sh'
+     - stage:
+        name: Deploy to SERVER RSIM
+        trigger: automatic
+        deployment: server_RSIM #Server On Premise 192.168.0.247
+        steps:
+          - step:
+             script:
+               - echo "Deploy to SERVER IP 247 - repo satusehat-rsim-staging"
+               - pipe: atlassian/ssh-run:0.2.2
+                 variables:
+                  SSH_USER: $HOST_USER
+                  SERVER: $HOST_ADDRESS
+                  PORT: $HOST_PORT
+                  MODE: 'script'
+                  COMMAND: './autodeploycicd/deployserver_rsim.sh'
+     - stage:
+        name: Deploy to SERVER RSEH
+        trigger: automatic
+        deployment: server_RSEH #Server On Premise 192.168.100.42
+        steps:
+          - step:
+             script:
+               - echo "Deploy to SERVER IP 42 - repo satusehat-rseh-staging"
+               - pipe: atlassian/ssh-run:0.2.2
+                 variables:
+                  SSH_USER: $HOST_USER
+                  SERVER: $HOST_ADDRESS
+                  PORT: $HOST_PORT
+                  MODE: 'script'
+                  COMMAND: './autodeploycicd/deployserver_rseh.sh'
+      

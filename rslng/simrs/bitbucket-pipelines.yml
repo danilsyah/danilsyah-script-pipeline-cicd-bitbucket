@@ -1,0 +1,16 @@
+pipelines:
+  branches:
+    simulasi:
+      - step:
+          name: Deploy to server IP 201 - ehospital-rslng-simulasi
+          trigger: automatic
+          deployment: staging_RSLNG
+          script:
+            - echo "Deploying to server IP 201 - ehospital-rslng-simulasi"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $HOST_USER
+                SERVER: $HOST_ADDRESS
+                PORT: $HOST_PORT
+                MODE: 'script'
+                COMMAND: './autodeploycicd/deployserver_rslng_staging.sh'

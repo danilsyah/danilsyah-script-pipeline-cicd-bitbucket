@@ -1,0 +1,16 @@
+pipelines:
+  branches:
+    simulasi:
+      - step:
+          name: Deploy to server IP 2 RSWS - ehealthsys-simulasi
+          trigger: automatic
+          deployment: staging_RSWS
+          script:
+            - echo "Deploying to server on premise - repo ehealthsys-simulasi"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $HOST_USER
+                SERVER: $HOST_ADDRESS
+                PORT: $HOST_PORT
+                MODE: 'script'
+                COMMAND: './autodeploycicd/deployserver_rsws_staging.sh'

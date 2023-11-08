@@ -1,0 +1,19 @@
+pipelines:
+  branches:
+    bmb:
+     - stage:
+        name: Deploy to SERVER RSBMB 
+        trigger: automatic
+        deployment: server_RSBMB #Server On Premise 10.200.4.201
+        steps:
+          - step:
+             script:
+               - echo "Deploy to SERVER IP 201 - repo satusehat-bmb-staging"
+               - pipe: atlassian/ssh-run:0.2.2
+                 variables:
+                  SSH_USER: $HOST_USER
+                  SERVER: $HOST_ADDRESS
+                  PORT: $HOST_PORT
+                  MODE: 'script'
+                  COMMAND: './autodeploycicd/deployserver_rsbmb.sh'
+      

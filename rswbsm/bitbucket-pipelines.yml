@@ -1,0 +1,16 @@
+pipelines:
+  branches:
+    rswbsm:
+      - step:
+          name: Deploy to server ip 84 rswbsm - ihospital-rswbsm-simulasi
+          trigger: automatic
+          deployment: staging_RSWBSM
+          script:
+            - echo "Deploying to server ip 84 - repo ihospital-rswbsm-simulasi"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $HOST_USER
+                SERVER: $HOST_ADDRESS
+                PORT: $HOST_PORT
+                MODE: 'script'
+                COMMAND: './autodeploycicd/deployserver_rswbsm_staging.sh'

@@ -1,0 +1,29 @@
+pipelines:
+  branches:
+    rsih_simulasi:
+      - step:
+          name: Deploy to server IP 107 RSIH - ihospital-rsih-simulasi
+          trigger: automatic
+          deployment: staging_RSIH
+          script:
+            - echo "Deploying to server IP 107 RSIH - ihospital-rsih-simulasi"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $HOST_USER
+                SERVER: $HOST_ADDRESS
+                PORT: $HOST_PORT
+                MODE: "script"
+                COMMAND: "./autodeploycicd/deployserver_rsih_staging_107.sh"
+      - step:
+          name: Deploy to server IP 106 RSIH - ihospital-rsih-simulasi
+          trigger: automatic
+          deployment: staging_RSIH2
+          script:
+            - echo "Deploying to server IP 106 RSIH - ihospital-rsih-simulasi"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $HOST_USER
+                SERVER: $HOST_ADDRESS
+                PORT: $HOST_PORT
+                MODE: "script"
+                COMMAND: "./autodeploycicd/deployserver_rsih_staging_106.sh"

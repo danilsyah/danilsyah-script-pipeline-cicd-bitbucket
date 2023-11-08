@@ -1,0 +1,42 @@
+pipelines:
+  branches:
+    rsaws:
+      - step:
+          name: Deploy to server 27 rsaws - rsaws-staging
+          trigger: automatic
+          deployment: staging_RSAWS
+          script:
+            - echo "Deploying to server 27 rsaws - rsaws-staging"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $HOST_USER
+                SERVER: $HOST_ADDRESS
+                PORT: $HOST_PORT
+                MODE: 'script'
+                COMMAND: './autodeploycicd/deployserver_rsaws_staging.sh'
+      # - step:
+      #     name: Deploy to server 27 rsaws - rsaws-running (backup)
+      #     trigger: manual
+      #     deployment: production_RSAWS_BACKUP
+      #     script:
+      #       - echo "Deploying to server 27 rsaws running - rsaws-running (backup)"
+      #       - pipe: atlassian/ssh-run:0.2.2
+      #         variables:
+      #           SSH_USER: $HOST_USER
+      #           SERVER: $HOST_ADDRESS
+      #           PORT: $HOST_PORT
+      #           MODE: 'script'
+      #           COMMAND: './autodeploycicd/deployserver_rsaws_running_backup.sh'
+      # - step:
+      #     name: Deploy to server 25 rsaws  - rsaws-running (main)
+      #     trigger: manual
+      #     deployment: production_RSAWS
+      #     script:
+      #       - echo "Deploying to server 25 rsaws running - rsaws-running (main)"
+      #       - pipe: atlassian/ssh-run:0.2.2
+      #         variables:
+      #           SSH_USER: $HOST_USER
+      #           SERVER: $HOST_ADDRESS
+      #           PORT: $HOST_PORT
+      #           MODE: 'script'
+      #           COMMAND: './autodeploycicd/deployserver_rsaws_running.sh'

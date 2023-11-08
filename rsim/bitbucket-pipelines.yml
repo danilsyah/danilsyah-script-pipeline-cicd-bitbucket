@@ -1,0 +1,16 @@
+pipelines:
+  branches:
+    rsim:
+      - step:
+          name: Deploy to server IP 249 - ihospital-rsim-staging
+          trigger: automatic
+          deployment: staging_RSIM
+          script:
+            - echo "Deploying to server IP 249 - ihospital-rsim-staging"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $HOST_USER
+                SERVER: $HOST_ADDRESS
+                PORT: $HOST_PORT
+                MODE: 'script'
+                COMMAND: './autodeploycicd/deployserver_rsim_staging.sh'

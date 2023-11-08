@@ -1,0 +1,16 @@
+pipelines:
+  branches:
+    master:
+     - step:
+         name: Deploy to SERVER3-HQ - repo ihospital
+         trigger: automatic
+         deployment: server3_HQ
+         script:
+           - echo "Deploy to SERVER3-HQ - repo ihospital"
+           - pipe: atlassian/ssh-run:0.2.2
+             variables:
+               SSH_USER: $HOST_USER
+               SERVER: $HOST_ADDRESS
+               PORT: $HOST_PORT
+               MODE: 'script'
+               COMMAND: './autodeploycicd/deployserver3_hq.sh'

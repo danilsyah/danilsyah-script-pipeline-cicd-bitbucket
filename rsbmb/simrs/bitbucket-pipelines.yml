@@ -1,0 +1,16 @@
+pipelines:
+  branches:
+    simulasi:
+      - step:
+          name: Deploy to server RSBMB - repo simulasiinova
+          trigger: automatic
+          deployment: staging_RSBMB
+          script:
+            - echo "Deploying to server RSBMB - repo simulasiinova"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $HOST_USER
+                SERVER: $HOST_ADDRESS
+                PORT: $HOST_PORT
+                MODE: 'script'
+                COMMAND: './autodeploycicd/deployserver_rsbmb_staging.sh'

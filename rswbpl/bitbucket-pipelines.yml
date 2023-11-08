@@ -1,0 +1,16 @@
+pipelines:
+  branches:
+    rswb_palu:
+      - step:
+          name: Deploy to server ip 8 rswbpl - ihospital-rswbpl-simulasi
+          trigger: automatic
+          deployment: staging_RSWBPL
+          script:
+            - echo "Deploying to server ip 8 - repo ihospital-rswbpl-simulasi"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $HOST_USER
+                SERVER: $HOST_ADDRESS
+                PORT: $HOST_PORT
+                MODE: 'script'
+                COMMAND: './autodeploycicd/deployserver_rswbpl_staging.sh'
