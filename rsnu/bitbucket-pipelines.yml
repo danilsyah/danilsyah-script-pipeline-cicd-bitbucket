@@ -2,15 +2,15 @@ pipelines:
   branches:
     rsnu:
       - step:
-          name: Deploy to server ip 6 rsnu - ihospital-rsnu-simulasi
+          name: Deploy to SERVER3_INOVA
           trigger: automatic
-          deployment: staging_RSNU
+          deployment: server3_HQ #Server On Premise IP 10.10.172.3
           script:
-            - echo "Deploying to server ip 6 - repo ihospital-rsnu-simulasi"
+            - echo "Deploy to SERVER3_HQ - repo ihospital-rsnu"
             - pipe: atlassian/ssh-run:0.2.2
               variables:
                 SSH_USER: $HOST_USER
                 SERVER: $HOST_ADDRESS
                 PORT: $HOST_PORT
                 MODE: 'script'
-                COMMAND: './autodeploycicd/deployserver_rsnu_staging.sh'
+                COMMAND: './autodeploycicd/deployserver_inova.sh'
