@@ -1,0 +1,18 @@
+pipelines:
+  branches:
+    easuransi: #Pull branch
+    - stage:
+        name: Deploy to SERVER3-HQ
+        trigger: automatic
+        deployment: server3_HQ #Server On Premise IP 10.10.172.3
+        steps:
+          - step:
+             script:
+              - echo "Deploy to SERVER3-HQ - repo e-asuransi-syariah"
+              - pipe: atlassian/ssh-run:0.2.2
+                variables:
+                  SSH_USER: $HOST_USER
+                  SERVER: $HOST_ADDRESS
+                  PORT: $HOST_PORT
+                  MODE: 'script'
+                  COMMAND: './autodeploycicd/deployserver3_easuransi_syariah.sh'

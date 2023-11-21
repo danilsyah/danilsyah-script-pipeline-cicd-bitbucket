@@ -1,16 +1,28 @@
 pipelines:
   branches:
     master:
-      - step:
-          name: Deploy to Server Local IP 3 HQ - Repo emr
+      - stage:
+          name: Deploy to Server-Inova-IP-3
           trigger: automatic
           deployment: server3_HQ
-          script:
-            - echo "Deploy to Server Local IP 3 HQ - Repo emr"
-            - pipe: atlassian/ssh-run:0.2.2
-              variables:
-                SSH_USER: $HOST_USER
-                SERVER: $HOST_ADDRESS
-                PORT: $HOST_PORT
-                MODE: 'script'
-                COMMAND: './autodeploycicd/deployserver3_hq.sh'
+          steps:
+           - step:
+              script:
+              - echo "Deploy to Server Local IP 3 HQ - Repo emr"
+              - pipe: atlassian/ssh-run:0.2.2
+                variables:
+                  SSH_USER: $HOST_USER
+                  SERVER: $HOST_ADDRESS
+                  PORT: $HOST_PORT
+                  MODE: 'script'
+                  COMMAND: './autodeploycicd/deployserver3_emr.sh'
+           - step:
+              script:
+              - echo "Deploy to Server Local IP 3 HQ - Repo irekammedis-syariah"
+              - pipe: atlassian/ssh-run:0.2.2
+                variables:
+                  SSH_USER: $HOST_USER
+                  SERVER: $HOST_ADDRESS
+                  PORT: $HOST_PORT
+                  MODE: 'script'
+                  COMMAND: './autodeploycicd/deployserver3_irekammedis-syariah.sh'
