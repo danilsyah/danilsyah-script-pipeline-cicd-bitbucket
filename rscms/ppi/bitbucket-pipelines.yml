@@ -1,16 +1,16 @@
 pipelines:
   branches:
-    master:
+    rscms: #pull branch trigger
      - step:
          name: Deploy to server IP 11 RSCMS - ppi-rscms-simulasi
          trigger: automatic
-         deployment: staging_RSCMS
+         deployment: server_RSCMS #remote ssh server on premise rscms IP 192.168.1.11
          script:
            - echo "Deploying to server IP 11 RSCMS - repo ppi-rscms-simulasi"
            - pipe: atlassian/ssh-run:0.2.2
              variables:
-               SSH_USER: $HOST_USER
-               SERVER: $HOST_ADDRESS
-               PORT: $HOST_PORT
+               SSH_USER: $HOST_USER #user ssh server
+               SERVER: $HOST_ADDRESS #ip public server
+               PORT: $HOST_PORT #port ssh server
                MODE: 'script'
-               COMMAND: './autodeploycicd/deployserver_rscms_staging.sh'
+               COMMAND: './autodeploycicd/deployserver_rscms.sh' #run file

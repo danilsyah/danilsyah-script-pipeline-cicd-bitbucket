@@ -4,7 +4,7 @@ pipelines:
     - stage:
         name: Deploy to SERVER3-HQ
         trigger: automatic
-        deployment: server3_HQ #Server On Premise IP 10.10.172.3
+        deployment: server3_HQ #SSH Server Inova On Premise IP 10.10.172.3
         steps:
           - step:
              script:
@@ -16,3 +16,18 @@ pipelines:
                   PORT: $HOST_PORT
                   MODE: 'script'
                   COMMAND: './autodeploycicd/deployserver3_easuransi_syariah.sh'
+    - stage:
+        name: Deploy to SERVER-RSAWS
+        trigger: automatic
+        deployment: server_RSAWS #SSH Server RSAWS On Premise IP 192.168.15.27
+        steps:
+          - step:
+             script:
+              - echo "Deploy to SERVER-RSAWS IP 27 - repo e-asuransi-simulasi"
+              - pipe: atlassian/ssh-run:0.2.2
+                variables:
+                  SSH_USER: $HOST_USER
+                  SERVER: $HOST_ADDRESS
+                  PORT: $HOST_PORT
+                  MODE: 'script'
+                  COMMAND: './autodeploycicd/deployserver_rsaws.sh'

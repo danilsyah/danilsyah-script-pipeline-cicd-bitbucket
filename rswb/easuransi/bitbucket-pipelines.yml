@@ -1,42 +1,33 @@
 pipelines:
   branches:
-    rswb:
-      - step:
-          name: Deploy to server 223 rswb - e-asuransi-rswb-simulasi
+    rswb: #Pipeline akan berjalan ketika ada merge atau push ke branch rswb
+      - stage:
+          name: Deploy to SERVER RSWB - e-asuransi-rswb-simulasi
           trigger: automatic
-          deployment: staging_RSWB
-          script:
-            - echo "Deploy to server 223 rswb - e-asuransi-rswb-simulasi"
-            - pipe: atlassian/ssh-run:0.2.2
-              variables:
-                SSH_USER: $HOST_USER
-                SERVER: $HOST_ADDRESS
-                PORT: $HOST_PORT
-                MODE: 'script'
-                COMMAND: './autodeploycicd/deployserver_rswb_staging.sh'
-      # - step:
-      #     name: Deploy to server 4 rsscpt - ihospital-rssacpt-old (running)
-      #     trigger: manual
-      #     deployment: production_RSSACPT_OLD
-      #     script:
-      #       - echo "Deploying to server 4 rsscpt running - ihospital-rssacpt-old"
-      #       - pipe: atlassian/ssh-run:0.2.2
-      #         variables:
-      #           SSH_USER: $HOST_USER
-      #           SERVER: $HOST_ADDRESS
-      #           PORT: $HOST_PORT
-      #           MODE: 'script'
-      #           COMMAND: './autodeploycicd/deployserver_rssacpt_running_old.sh'
-      # - step:
-      #     name: Deploy to server 5 rsscpt running - ihospital-rssacpt
-      #     trigger: manual
-      #     deployment: production_RSSACPT
-      #     script:
-      #       - echo "Deploying to server 5 rsscpt running - ihospital-rssacpt"
-      #       - pipe: atlassian/ssh-run:0.2.2
-      #         variables:
-      #           SSH_USER: $HOST_USER
-      #           SERVER: $HOST_ADDRESS
-      #           PORT: $HOST_PORT
-      #           MODE: 'script'
-      #           COMMAND: './autodeploycicd/deployserver_rssacpt_running.sh'
+          deployment: staging_RSWB #environment akses public ssh server IP Private 192.168.214.223
+          steps:
+           - step:
+              script:
+                - echo "Deploy to server RSWB - e-asuransi-rswb-simulasi"
+                - pipe: atlassian/ssh-run:0.2.2
+                  variables:
+                    SSH_USER: $HOST_USER #akses user login ssh server
+                    SERVER: $HOST_ADDRESS #IP Public 
+                    PORT: $HOST_PORT #Port SSH
+                    MODE: 'script'
+                    COMMAND: './autodeploycicd/deployserver_rswb_staging.sh' #SSH Pipelines akan menjalankan perintah Shell pada file
+      - stage:
+          name: Deploy to server RSWP - e-asuransi-simulasi
+          trigger: automatic
+          deployment: staging_RSWP #environment akses public ssh server IP Private 10.10.1.8
+          steps:
+           - step:
+              script:
+                - echo "Deploy to server RSWP - e-asuransi-simulasi"
+                - pipe: atlassian/ssh-run:0.2.2
+                  variables:
+                    SSH_USER: $HOST_USER
+                    SERVER: $HOST_ADDRESS
+                    PORT: $HOST_PORT
+                    MODE: 'script'
+                    COMMAND: './autodeploycicd/deployserver_rswp_staging.sh'

@@ -1,0 +1,20 @@
+pipelines:
+  branches:
+    master: 
+      - parallel:
+          # Jika suatu step mengalami fail-fast: false, maka langkah tersebut dapat gagal tanpa seluruh grup paralel berhenti.
+          fail-fast: false
+          steps:    
+           - step:
+              name: Deploy to SERVER RSWB
+              trigger: automatic
+              deployment: server_RSWB #Server On Premise 192.168.214.223
+              script:
+                - echo "Deploy to SERVER IP 223 - repo inovadok-backend-simulasi"
+                - pipe: atlassian/ssh-run:0.2.2
+                  variables:
+                    SSH_USER: $HOST_USER
+                    SERVER: $HOST_ADDRESS
+                    PORT: $HOST_PORT
+                    MODE: 'script'
+                    COMMAND: './autodeploycicd/deployserver_rswb.sh'

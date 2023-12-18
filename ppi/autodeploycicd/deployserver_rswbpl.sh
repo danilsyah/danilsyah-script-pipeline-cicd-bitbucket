@@ -1,6 +1,6 @@
 #!/bin/bash
-#remote ssh server onpremise rswb IP 192.168.214.223
-cd /var/www/html/e-asuransi-rswb-simulasi
+#pipelines remote ssh server onpremise rswbpl IP 10.10.1.8
+cd /var/www/html/ppi-simulasi
 tanggal=$(date +'%Y%m%d_%H%M')
 git checkout -b pull_$tanggal
 git pull origin rswb
